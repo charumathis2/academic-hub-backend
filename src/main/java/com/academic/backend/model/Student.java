@@ -1,10 +1,6 @@
 package com.academic.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "students")
@@ -20,16 +16,24 @@ public class Student {
     private String department;
     private String role;
 
+    // Default constructor (REQUIRED for JPA)
     public Student() {
         this.role = "STUDENT";
     }
 
-    public Long getId() {
-        return id;
+    // Constructor for inserting data
+    public Student(String name, String email, String password, String department) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.department = department;
+        this.role = "STUDENT";
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    // Getters and Setters
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
