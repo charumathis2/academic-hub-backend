@@ -20,7 +20,7 @@ public class StudentController {
         return repo.findAll();
     }
 
-    @PostMapping("/quick-add")
+    @GetMapping("/quick-add")
     public String quickAdd() {
 
         repo.save(new Student("Charumathi S","charumathis2006@gmail.com","pass123","AIDS"));
