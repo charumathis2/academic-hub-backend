@@ -23,23 +23,25 @@ public class SecurityConfig {
     private JwtFilter jwtFilter;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-    .requestMatchers("/api/auth/**").permitAll()
-    .requestMatchers("/api/admin/**").permitAll()
-    .requestMatchers("/api/deadlines/**").permitAll()
-    .requestMatchers("/api/students/**").permitAll()   // ✅ ADD THIS
-    .anyRequest().authenticated()
-)
-            .addFilterBefore(jwtFilter,
-                UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .csrf(csrf -> csrf.disable())
+        .sessionManagement(session ->
+            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/api/auth/**").permitAll()
+            .requestMatchers("/api/students").permitAll()   // ✅ IMPORTANT (no /**)
+            .requestMatchers("/api/students/**").permitAll()
+            .requestMatchers("/api/admin/**").permitAll()
+            .requestMatchers("/api/deadlines/**").permitAll()
+            .anyRequest().permitAll()   // 🔥 TEMP FIX (VERY IMPORTANT)
+        )
+        .addFilterBefore(jwtFilter,
+            UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
+}
 
     @Bean
     public PasswordEncoder passwordEncoder() {
