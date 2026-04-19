@@ -2,24 +2,25 @@ package com.academic.backend;
 
 import com.academic.backend.model.Student;
 import com.academic.backend.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @Component
-public class DataLoader {
+public class DataLoader implements CommandLineRunner {
 
-    @Bean
-    CommandLineRunner loadData(StudentRepository repo) {
-        return args -> {
+    @Autowired
+    private StudentRepository repo;
 
-            System.out.println("🔥 DATA LOADER RUNNING"); // CHECK THIS IN LOGS
+    @Override
+    public void run(String... args) {
 
-            repo.deleteAll();
+        System.out.println("🔥 DATA LOADER RUNNING");
 
-            repo.save(new Student("Arun Kumar","arun@gmail.com","pass123","CSE"));
-            repo.save(new Student("Priya Sharma","priya@gmail.com","pass123","CSE"));
-            repo.save(new Student("Rahul Singh","rahul@gmail.com","pass123","CSE"));
-        };
+        repo.deleteAll();
+
+        repo.save(new Student("Arun Kumar","arun@gmail.com","pass123","CSE"));
+        repo.save(new Student("Priya Sharma","priya@gmail.com","pass123","CSE"));
+        repo.save(new Student("Rahul Singh","rahul@gmail.com","pass123","CSE"));
     }
 }
