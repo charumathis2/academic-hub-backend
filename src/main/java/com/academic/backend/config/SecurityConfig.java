@@ -30,7 +30,10 @@ public class SecurityConfig {
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-    .requestMatchers("/api/**").permitAll()   // 🔥 IMPORTANT FIX
+    .requestMatchers("/api/auth/**").permitAll()
+    .requestMatchers("/api/admin/**").permitAll()
+    .requestMatchers("/api/deadlines/**").permitAll()
+    .requestMatchers("/api/students/**").permitAll()   // ✅ ADD THIS
     .anyRequest().authenticated()
 )
             .addFilterBefore(jwtFilter,
