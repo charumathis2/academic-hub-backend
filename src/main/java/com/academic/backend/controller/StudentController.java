@@ -19,4 +19,14 @@ public class StudentController {
     public List<Student> getAllStudents() {
         return repo.findAll();
     }
+
+    @PostMapping("/quick-add")
+    public String quickAdd() {
+
+        repo.save(new Student("Charumathi S","charumathis2006@gmail.com","pass123","AIDS"));
+        repo.save(new Student("Arun Kumar","arun@gmail.com","pass123","CSE"));
+        repo.save(new Student("Priya Sharma","priya@gmail.com","pass123","CSE"));
+
+        return "Inserted";
+    }
 }
